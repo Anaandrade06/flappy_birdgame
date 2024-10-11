@@ -2,32 +2,46 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="flappy_birdgame.MainPage"
-            Shell.NavBarIsVisible="false">
+             Shell.NavBarIsVisible="false">
 
-<Grid>
-<Image Source="fundo.jpg"
-VerticalOptions="Fill"
-HorizontalOptions="Fill"/>
+    <Grid>
+        <Image Source="fundo.jpg"
+               VerticalOptions="Fill"
+               HorizontalOptions="Fill"/>
 
-<Image Source= "pardal.png"
-HorizontalOptions="Start"
-WidthRequest="50"
-HeightRequest="50"/>
+        <Image Source="pardal.png"
+               x:Name="pardal"
+               HorizontalOptions="Start"
+               WidthRequest="50"
+               HeightRequest="50"/>
 
-<Image Source="cano.jpg"
-HeightRequest="300"
-HorizontalOptions="End"
-VerticalOptions="Start"/>
+        <Image Source="cano.jpg"
+               x:Name="Canocima"
+               HeightRequest="300"
+               HorizontalOptions="End"
+               VerticalOptions="Start"/>
 
-<Image Source ="cano.baixo.jpg"
-HeightRequest="300"
-HorizontalOptions="End"
-VerticalOptions="End"/>
+        <Image Source="cano.baixo.jpg"
+               x:Name="Canobaixo"
+               HeightRequest="300"
+               HorizontalOptions="End"
+               VerticalOptions="End"/>
 
-<Image Source="chao.jpg"
-HorizontalOptions="Fill"
-VerticalOptions="End"/>
+        <Image Source="chao.jpg"
+               x:Name="Chao"
+               HorizontalOptions="Fill"
+               VerticalOptions="End"/>
 
-</Grid>
-   
+        <Frame x:Name="FrameGameOver"
+               BackgroundColor="Black"
+               HorizontalOptions="Fill"
+               VerticalOptions="Fill">
+            <Frame.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnGameOverClicked"/>
+            </Frame.GestureRecognizers>
+        
+        <Image Source ="inicio.png"/>
+        
+        </Frame>
+    </Grid>
 </ContentPage>
