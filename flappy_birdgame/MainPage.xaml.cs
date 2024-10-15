@@ -3,50 +3,54 @@
 namespace flappy_birdgame;
 public partial class MainPage : ContentPage
 {
-	const int gravity = 10;
+	const int gravidade = 8;
 
-	const int TimeToFrame = 2000;
+	const int TimeToFrame =80;
 
 	bool estaMorto = true;
 	double larguraJanela = 0;
 	double alturaJanela = 0;
 	int velocidade = 20;
-
+	const int maxTempoPulando=3;
+	int tempoPulando=0;
+	bool estaPulando=false;
+	const int forcaPulo= 40;
 
 	public MainPage()
 	{
 		InitializeComponent();
 	}
-
-	async Task Drawn()
+async void AplicaGravidade()
 	{
-		while (!estaMorto)
+		pardal.TranslationY += gravidade;
 
-
+	}
+	async Task Desenhar()
+	{
+		while ( ! estaMorto)
 		{
-			IntroGravity();
+			if( estaPulando)
+			AplicaPulo();
+			else 
+			AplicaGravidade();
+			GerenciaCanos();
+			if (VerificaColisao())
+			{
+				estaMorto = true;
+				FrameGameOver.IsVisible = true;
+				break;
+			}
 			await Task.Delay(TimeToFrame);
 		}
 	}
-	async void IntroGravity()
-	{
-		pardal.TranslationY += gravity;
-
-	}
-
-	void OnGameOverClicked(object sender, EventArgs a)
-	{
-		FrameGameOver.IsVisible = false;
-		Inicializar();
-		Desenhar();
-	}
-
 	protected override void OnSizeAllocated(double width, double height)
 	{
 		base.OnSizeAllocated(width, height);
 		larguraJanela = width;
+		alturaJanela = height;
+
 	}
-	void GerenciadorCanos()
+	void GerenciaCanos()
 	{
 		Canocima.TranslationX -= velocidade;
 		Canobaixo.TranslationX -= velocidade;
@@ -55,7 +59,61 @@ public partial class MainPage : ContentPage
 			Canobaixo.TranslationX = 0;
 			Canocima.TranslationX = 0;
 		}
-		
-	}
 
+	}
+	private void OnGameOverClicked(object sender, EventArgs a)
+	{
+		FrameGameOver.IsVisible = false;
+		Inicializar();
+		Desenhar();
+	}
+	
+	void Inicializar()
+	{
+		estaMorto = false;
+		pardal.TranslationY = 0;
+	}
+	
+	bool VerificaColisao()
+	{
+		if (!estaMorto)
+		{
+			if (VerificaColisaoTeto() ||
+			 VerificaColisaoChao())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	bool VerificaColisaoTeto()
+	{
+		var minY = -alturaJanela / 2;
+		if (pardal.TranslationY <= minY)
+			return true;
+		else
+			return false;
+	}
+	bool VerificaColisaoChao()
+	{
+		var maxY = alturaJanela/2 - Chao.HeightRequest;
+		if (pardal.TranslationY >= maxY)
+			return true;
+		else
+			return false;
+	}
+	 void AplicaPulo()
+	 {
+		pardal.TranslationY -= forcaPulo;
+		tempoPulando ++;
+		if (tempoPulando  >= maxTempoPulando)
+		{
+			estaPulando = false;
+			tempoPulando = 0;
+		}
+	 }
+	 void OnGridClicked (object sender, EventArgs a)
+	 {
+		estaPulando = true; 
+	 }	
 }

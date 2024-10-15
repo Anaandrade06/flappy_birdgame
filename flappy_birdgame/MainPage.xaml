@@ -7,6 +7,7 @@
     <Grid>
         <Image Source="fundo.jpg"
                VerticalOptions="Fill"
+               Aspect="AspectFill"
                HorizontalOptions="Fill"/>
 
         <Image Source="pardal.png"
@@ -29,6 +30,8 @@
 
         <Image Source="chao.jpg"
                x:Name="Chao"
+               HeightRequest="150"
+               Aspect="AspectFill"
                HorizontalOptions="Fill"
                VerticalOptions="End"/>
 
@@ -39,9 +42,12 @@
             <Frame.GestureRecognizers>
             <TapGestureRecognizer Tapped="OnGameOverClicked"/>
             </Frame.GestureRecognizers>
-        
+       
         <Image Source ="inicio.png"/>
         
         </Frame>
+        <Grid.GestureRecognizers>
+        <TapGestureRecognizer Tapped="OnGridClicked"/>
+        </Grid.GestureRecognizers>
     </Grid>
 </ContentPage>
