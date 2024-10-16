@@ -5,16 +5,18 @@ public partial class MainPage : ContentPage
 {
 	const int gravidade = 8;
 
-	const int TimeToFrame =80;
+	const int TimeToFrame = 80;
 
 	bool estaMorto = true;
 	double larguraJanela = 0;
 	double alturaJanela = 0;
 	int velocidade = 20;
-	const int maxTempoPulando=3;
-	int tempoPulando=0;
-	bool estaPulando=false;
-	const int forcaPulo= 40;
+	const int maxTempoPulando = 3;
+	int tempoPulando = 0;
+	bool estaPulando = false;
+	const int forcaPulo = 40;
+	const int aberturaMin = 100;
+
 
 	public MainPage()
 	{
@@ -58,7 +60,12 @@ async void AplicaGravidade()
 		{
 			Canobaixo.TranslationX = 0;
 			Canocima.TranslationX = 0;
+			var alturaMax=-100;
+			var alturaMin=-Canobaixo.HeightRequest;
+			Canocima.TranslationY = Random.Shared.Next((int)alturaMin, (int)alturaMax);
+			Canobaixo.TranslationY = Canocima.TranslationY + alturaMin + aberturaMin + Canobaixo.HeightRequest;
 		}
+
 
 	}
 	private void OnGameOverClicked(object sender, EventArgs a)

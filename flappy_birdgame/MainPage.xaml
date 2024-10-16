@@ -20,13 +20,13 @@
                x:Name="Canocima"
                HeightRequest="300"
                HorizontalOptions="End"
-               VerticalOptions="Start"/>
-
-        <Image Source="cano.baixo.jpg"
-               x:Name="Canobaixo"
-               HeightRequest="300"
-               HorizontalOptions="End"
                VerticalOptions="End"/>
+               
+                <Image Source="cano.baixo.jpg"
+               x:Name="Canobaixo"
+               HeightRequest="200"
+               HorizontalOptions="End"
+               VerticalOptions="Start"/>
 
         <Image Source="chao.jpg"
                x:Name="Chao"
