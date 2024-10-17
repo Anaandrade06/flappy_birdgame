@@ -15,7 +15,7 @@ public partial class MainPage : ContentPage
 	int tempoPulando = 0;
 	bool estaPulando = false;
 	const int forcaPulo = 40;
-	const int aberturaMin = 100;
+	const int aberturaMin = 50;
 	int score = 0;
 
 
@@ -66,7 +66,7 @@ async void AplicaGravidade()
 			Canocima.TranslationY = Random.Shared.Next((int)alturaMin, (int)alturaMax);
 			Canobaixo.TranslationY = Canocima.TranslationY + alturaMin + aberturaMin + Canobaixo.HeightRequest;
 			score++;
-			LabelScore.Text = "Canos:" + score.ToString(D3);
+			LabelScore.Text = "Canos:" + score.ToString("D3");
 		}
 
 

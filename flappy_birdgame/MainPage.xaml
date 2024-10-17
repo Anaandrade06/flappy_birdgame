@@ -4,50 +4,55 @@
              x:Class="flappy_birdgame.MainPage"
              Shell.NavBarIsVisible="false">
 
-    <Grid>
-        <Image Source="fundo.jpg"
-               VerticalOptions="Fill"
-               Aspect="AspectFill"
-               HorizontalOptions="Fill"/>
+       <Grid>
+              <Label x:Name="LabelScore"/>
+              <Image Source="fundo.jpg"
+                     VerticalOptions="Fill"
+                     Aspect="AspectFill"
+                     HorizontalOptions="Fill"/>
 
-        <Image Source="pardal.png"
-               x:Name="pardal"
-               HorizontalOptions="Start"
-               WidthRequest="50"
-               HeightRequest="50"/>
+              <Image Source="pardal.png"
+                     x:Name="pardal"
+                     HorizontalOptions="Start"
+                     WidthRequest="50"
+                     HeightRequest="50"/>
 
-        <Image Source="cano.jpg"
-               x:Name="Canocima"
-               HeightRequest="300"
-               HorizontalOptions="End"
-               VerticalOptions="End"/>
-               
-                <Image Source="cano.baixo.jpg"
-               x:Name="Canobaixo"
-               HeightRequest="200"
-               HorizontalOptions="End"
-               VerticalOptions="Start"/>
+              <Image Source="cano.baixoo.jpg"
+                     x:Name="Canobaixo"
+                     HeightRequest="300"
+                     Aspect="AspectFill"
+                     WidthRequest="50"
+                     HorizontalOptions="End"
+                     VerticalOptions="End"/>
 
-        <Image Source="chao.jpg"
-               x:Name="Chao"
-               HeightRequest="150"
-               Aspect="AspectFill"
-               HorizontalOptions="Fill"
-               VerticalOptions="End"/>
+              <Image Source="canoo.jpg"
+                     x:Name="Canocima"
+                     HeightRequest="300"
+                     WidthRequest="50"
+                     Aspect="AspectFill"
+                     HorizontalOptions="End"
+                     VerticalOptions="Start"/>
 
-        <Frame x:Name="FrameGameOver"
-               BackgroundColor="Black"
-               HorizontalOptions="Fill"
-               VerticalOptions="Fill">
-            <Frame.GestureRecognizers>
-            <TapGestureRecognizer Tapped="OnGameOverClicked"/>
-            </Frame.GestureRecognizers>
-       
-        <Image Source ="inicio.png"/>
-        
-        </Frame>
-        <Grid.GestureRecognizers>
-        <TapGestureRecognizer Tapped="OnGridClicked"/>
-        </Grid.GestureRecognizers>
-    </Grid>
+              <Image Source="chao.jpg"
+                     x:Name="Chao"
+                     HeightRequest="150"
+                     Aspect="AspectFill"
+                     HorizontalOptions="Fill"
+                     VerticalOptions="End"/>
+
+              <Frame x:Name="FrameGameOver"
+                     BackgroundColor="Black"
+                     HorizontalOptions="Fill"
+                     VerticalOptions="Fill">
+                     <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnGameOverClicked"/>
+                     </Frame.GestureRecognizers>
+
+                     <Image Source="inicio.png"/>
+
+              </Frame>
+              <Grid.GestureRecognizers>
+                     <TapGestureRecognizer Tapped="OnGridClicked"/>
+              </Grid.GestureRecognizers>
+       </Grid>
 </ContentPage>
