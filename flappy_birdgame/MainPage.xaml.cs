@@ -16,6 +16,7 @@ public partial class MainPage : ContentPage
 	bool estaPulando = false;
 	const int forcaPulo = 40;
 	const int aberturaMin = 100;
+	int score = 0;
 
 
 	public MainPage()
@@ -64,6 +65,8 @@ async void AplicaGravidade()
 			var alturaMin=-Canobaixo.HeightRequest;
 			Canocima.TranslationY = Random.Shared.Next((int)alturaMin, (int)alturaMax);
 			Canobaixo.TranslationY = Canocima.TranslationY + alturaMin + aberturaMin + Canobaixo.HeightRequest;
+			score++;
+			LabelScore.Text = "Canos:" + score.ToString(D3);
 		}
 
 
