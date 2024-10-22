@@ -14,21 +14,23 @@
               <Image Source="pardal.png"
                      x:Name="pardal"
                      HorizontalOptions="Start"
-                     WidthRequest="50"
-                     HeightRequest="50"/>
+                     WidthRequest="30"
+                     HeightRequest="30"/>
 
               <Image Source="cano.baixoo.jpg"
                      x:Name="Canobaixo"
+                     BackgroundColor="Green"
                      HeightRequest="300"
                      Aspect="AspectFill"
-                     WidthRequest="50"
+                     WidthRequest="30"
                      HorizontalOptions="End"
                      VerticalOptions="End"/>
 
               <Image Source="canoo.jpg"
                      x:Name="Canocima"
                      HeightRequest="300"
-                     WidthRequest="50"
+                     BackgroundColor="Green"
+                     WidthRequest="30"
                      Aspect="AspectFill"
                      HorizontalOptions="End"
                      VerticalOptions="Start"/>

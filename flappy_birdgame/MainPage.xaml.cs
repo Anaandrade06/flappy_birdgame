@@ -23,19 +23,19 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
 	}
-async void AplicaGravidade()
+	async void AplicaGravidade()
 	{
 		pardal.TranslationY += gravidade;
 
 	}
 	async Task Desenhar()
 	{
-		while ( ! estaMorto)
+		while (!estaMorto)
 		{
-			if( estaPulando)
-			AplicaPulo();
-			else 
-			AplicaGravidade();
+			if (estaPulando)
+				AplicaPulo();
+			else
+				AplicaGravidade();
 			GerenciaCanos();
 			if (VerificaColisao())
 			{
@@ -61,8 +61,8 @@ async void AplicaGravidade()
 		{
 			Canobaixo.TranslationX = 0;
 			Canocima.TranslationX = 0;
-			var alturaMax=-100;
-			var alturaMin=-Canobaixo.HeightRequest;
+			var alturaMax = -100;
+			var alturaMin = -Canobaixo.HeightRequest;
 			Canocima.TranslationY = Random.Shared.Next((int)alturaMin, (int)alturaMax);
 			Canobaixo.TranslationY = Canocima.TranslationY + alturaMin + aberturaMin + Canobaixo.HeightRequest;
 			score++;
@@ -77,19 +77,20 @@ async void AplicaGravidade()
 		Inicializar();
 		Desenhar();
 	}
-	
+
 	void Inicializar()
 	{
 		estaMorto = false;
 		pardal.TranslationY = 0;
 	}
-	
+
 	bool VerificaColisao()
 	{
 		if (!estaMorto)
 		{
 			if (VerificaColisaoTeto() ||
-			 VerificaColisaoChao())
+			 VerificaColisaoChao() ||
+			 VerificaColisaoCanoCima())
 			{
 				return true;
 			}
@@ -106,24 +107,41 @@ async void AplicaGravidade()
 	}
 	bool VerificaColisaoChao()
 	{
-		var maxY = alturaJanela/2 - Chao.HeightRequest;
+		var maxY = alturaJanela / 2 - Chao.HeightRequest;
 		if (pardal.TranslationY >= maxY)
 			return true;
 		else
 			return false;
 	}
-	 void AplicaPulo()
-	 {
+	void AplicaPulo()
+	{
 		pardal.TranslationY -= forcaPulo;
-		tempoPulando ++;
-		if (tempoPulando  >= maxTempoPulando)
+		tempoPulando++;
+		if (tempoPulando >= maxTempoPulando)
 		{
 			estaPulando = false;
 			tempoPulando = 0;
 		}
-	 }
-	 void OnGridClicked (object sender, EventArgs a)
-	 {
-		estaPulando = true; 
-	 }	
+	}
+	void OnGridClicked(object sender, EventArgs a)
+	{
+		estaPulando = true;
+	}
+	private bool VerificaColisaoCanoCima()
+	{
+		var posHpardal = (larguraJanela / 2) - (pardal.WidthRequest / 2);
+		var posVpardal = (alturaJanela / 2) - (pardal.HeightRequest / 2) + pardal.TranslationY;
+		if (posHpardal >= Math.Abs(Canocima.TranslationX) - Canocima.WidthRequest &&
+		posHpardal <= Math.Abs(Canocima.TranslationX) + Canocima.WidthRequest &&
+		posVpardal <= Canocima.HeightRequest + Canocima.TranslationY)
+		{
+			return true;
+		}
+		else 
+		{
+			return false;
+		}
+
+	}
+
 }
