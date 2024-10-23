@@ -67,6 +67,8 @@ public partial class MainPage : ContentPage
 			Canobaixo.TranslationY = Canocima.TranslationY + alturaMin + aberturaMin + Canobaixo.HeightRequest;
 			score++;
 			LabelScore.Text = "Canos:" + score.ToString("D3");
+			if (score %2==0)
+			velocidade ++;
 		}
 
 
@@ -90,7 +92,8 @@ public partial class MainPage : ContentPage
 		{
 			if (VerificaColisaoTeto() ||
 			 VerificaColisaoChao() ||
-			 VerificaColisaoCanoCima())
+			 VerificaColisaoCanoCima()||
+			 VerificaColisaoCanobaixo());
 			{
 				return true;
 			}
@@ -142,6 +145,22 @@ public partial class MainPage : ContentPage
 			return false;
 		}
 
+	}
+	bool VerificaColisaoCanobaixo()
+	{
+	var posHpardal = (larguraJanela /2) - (pardal.WidthRequest/2);
+    var posVpardal = (alturaJanela /2) + (pardal.HeightRequest/2)+ pardal.TranslationY;
+	var yMaxCano = Canocima.HeightRequest + Canocima.TranslationY + aberturaMin;
+	if (posHpardal >= Math.Abs(Canobaixo.TranslationX) - Canobaixo.WidthRequest &&
+	posHpardal <= Math.Abs (Canobaixo.TranslationX) + Canobaixo.HeightRequest &&
+	posVpardal >= yMaxCano)
+	{
+		return true;
+	} 
+	else 
+	{
+		return false;
+	}
 	}
 
 }
