@@ -3,30 +3,33 @@
 namespace flappy_birdgame;
 public partial class MainPage : ContentPage
 {
-	const int gravidade = 8;
-
-	const int TimeToFrame = 80;
-
-	bool estaMorto = true;
-	double larguraJanela = 0;
-	double alturaJanela = 0;
 	int velocidade = 20;
-	const int maxTempoPulando = 3;
-	int tempoPulando = 0;
-	bool estaPulando = false;
+	const int gravidade = 8;
 	const int forcaPulo = 40;
-	const int aberturaMin = 50;
+	const int maxTempoPulando = 3;
 	int score = 0;
+	const int aberturaMin = 200;
+	const int TimeToFrame = 80;
+	double alturaJanela = 0;
+	double larguraJanela = 0;
+	bool estaMorto = true;
+	bool estaPulando = false;
+	int tempoPulando = 0;
 
 
 	public MainPage()
 	{
 		InitializeComponent();
 	}
-	async void AplicaGravidade()
+	void Inicializar()
 	{
-		pardal.TranslationY += gravidade;
+		Canobaixo.TranslationX = -larguraJanela;
+		Canocima.TranslationX = -larguraJanela;
+		pardal.TranslationX = 0;
+		pardal.TranslationX = 0;
+		score = 0;
 
+		GerenciaCanos();
 	}
 	async Task Desenhar()
 	{
@@ -36,10 +39,13 @@ public partial class MainPage : ContentPage
 				AplicaPulo();
 			else
 				AplicaGravidade();
+
 			GerenciaCanos();
+
 			if (VerificaColisao())
 			{
 				estaMorto = true;
+				labelGameOverScore.Text = "Você passou por \n" + score + "canos";
 				FrameGameOver.IsVisible = true;
 				break;
 			}
@@ -51,6 +57,11 @@ public partial class MainPage : ContentPage
 		base.OnSizeAllocated(width, height);
 		larguraJanela = width;
 		alturaJanela = height;
+		if (height > 0)
+		{
+			Canocima.HeightRequest = height - Chao.HeightRequest;
+			Canobaixo.HeightRequest = height - Chao.HeightRequest;
+		}
 
 	}
 	void GerenciaCanos()
@@ -61,17 +72,46 @@ public partial class MainPage : ContentPage
 		{
 			Canobaixo.TranslationX = 0;
 			Canocima.TranslationX = 0;
-			var alturaMax = -100;
-			var alturaMin = -Canobaixo.HeightRequest;
+
+			var alturaMax = -(Canobaixo.HeightRequest * 0.1);
+			var alturaMin = -(Canobaixo.HeightRequest * 0.8);
+
 			Canocima.TranslationY = Random.Shared.Next((int)alturaMin, (int)alturaMax);
-			Canobaixo.TranslationY = Canocima.TranslationY + alturaMin + aberturaMin + Canobaixo.HeightRequest;
+			Canobaixo.TranslationY = Canocima.HeightRequest + Canocima.TranslationY + aberturaMin;
+
 			score++;
-			LabelScore.Text = "Canos:" + score.ToString("D3");
-			if (score %2==0)
-			velocidade ++;
+			LabelScore.Text = "Score:" + score.ToString("D5");
+			if (score % 4 == 0)
+				velocidade++;
 		}
+	}
+	void AplicaGravidade()
+	{
+		pardal.TranslationY += gravidade;
 
-
+	}
+	void AplicaPulo()
+	{
+		pardal.TranslationY -= forcaPulo;
+		tempoPulando++;
+		if (tempoPulando >= maxTempoPulando)
+		{
+			tempoPulando = 0;
+			estaPulando = false;
+		}
+	}
+	bool VerificaColisao()
+	{
+		{
+			if (VerificaColisaoTeto() ||
+			 VerificaColisaoChao() ||
+			 VerificaColisaoCanoCima() ||
+			 VerificaColisaoCanobaixo()) ;
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	private void OnGameOverClicked(object sender, EventArgs a)
 	{
@@ -80,26 +120,6 @@ public partial class MainPage : ContentPage
 		Desenhar();
 	}
 
-	void Inicializar()
-	{
-		estaMorto = false;
-		pardal.TranslationY = 0;
-	}
-
-	bool VerificaColisao()
-	{
-		if (!estaMorto)
-		{
-			if (VerificaColisaoTeto() ||
-			 VerificaColisaoChao() ||
-			 VerificaColisaoCanoCima()||
-			 VerificaColisaoCanobaixo());
-			{
-				return true;
-			}
-		}
-		return false;
-	}
 	bool VerificaColisaoTeto()
 	{
 		var minY = -alturaJanela / 2;
@@ -108,24 +128,17 @@ public partial class MainPage : ContentPage
 		else
 			return false;
 	}
+
+	
 	bool VerificaColisaoChao()
 	{
-		var maxY = alturaJanela / 2 - Chao.HeightRequest;
-		if (pardal.TranslationY >= maxY)
+		var maxY = alturaJanela / 2;
+		if (pardal.TranslationY >= maxY - Chao.HeightRequest)
 			return true;
 		else
 			return false;
 	}
-	void AplicaPulo()
-	{
-		pardal.TranslationY -= forcaPulo;
-		tempoPulando++;
-		if (tempoPulando >= maxTempoPulando)
-		{
-			estaPulando = false;
-			tempoPulando = 0;
-		}
-	}
+
 	void OnGridClicked(object sender, EventArgs a)
 	{
 		estaPulando = true;
@@ -140,7 +153,7 @@ public partial class MainPage : ContentPage
 		{
 			return true;
 		}
-		else 
+		else
 		{
 			return false;
 		}
@@ -148,19 +161,19 @@ public partial class MainPage : ContentPage
 	}
 	bool VerificaColisaoCanobaixo()
 	{
-	var posHpardal = (larguraJanela /2) - (pardal.WidthRequest/2);
-    var posVpardal = (alturaJanela /2) + (pardal.HeightRequest/2)+ pardal.TranslationY;
-	var yMaxCano = Canocima.HeightRequest + Canocima.TranslationY + aberturaMin;
-	if (posHpardal >= Math.Abs(Canobaixo.TranslationX) - Canobaixo.WidthRequest &&
-	posHpardal <= Math.Abs (Canobaixo.TranslationX) + Canobaixo.HeightRequest &&
-	posVpardal >= yMaxCano)
-	{
-		return true;
-	} 
-	else 
-	{
-		return false;
-	}
+		var posHpardal = (larguraJanela / 2) - (pardal.WidthRequest / 2);
+		var posVpardal = (alturaJanela / 2) + (pardal.HeightRequest / 2) + pardal.TranslationY;
+		var yMaxCano = Canocima.HeightRequest + Canocima.TranslationY + aberturaMin;
+		if (posHpardal >= Math.Abs(Canobaixo.TranslationX) - Canobaixo.WidthRequest &&
+		posHpardal <= Math.Abs(Canobaixo.TranslationX) + Canobaixo.HeightRequest &&
+		posVpardal >= yMaxCano)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 }

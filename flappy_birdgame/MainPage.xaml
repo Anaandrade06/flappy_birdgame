@@ -5,17 +5,30 @@
              Shell.NavBarIsVisible="false">
 
        <Grid>
-              <Label x:Name="LabelScore"/>
+
               <Image Source="fundo.jpg"
-                     VerticalOptions="Fill"
                      Aspect="AspectFill"
+                     Margin="0"
+                     VerticalOptions="Fill"
                      HorizontalOptions="Fill"/>
 
               <Image Source="pardal.png"
                      x:Name="pardal"
+                     Aspect="AspectFill"
+                     Margin="20,0,0,0"
+                     HeightRequest="30"
+                     WidthRequest="50"
                      HorizontalOptions="Start"
-                     WidthRequest="30"
-                     HeightRequest="30"/>
+                     VerticalOptions="Center"/>
+
+              <Image Source="canoo.jpg"
+                     x:Name="Canocima"
+                     Margin="0,0,0,0"
+                     Aspect="AspectFill"
+                     HeightRequest="62"
+                     WidthRequest="50"
+                     HorizontalOptions="End"
+                     VerticalOptions="Start"/>
 
               <Image Source="cano.baixoo.jpg"
                      x:Name="Canobaixo"
@@ -26,31 +39,39 @@
                      HorizontalOptions="End"
                      VerticalOptions="End"/>
 
-              <Image Source="canoo.jpg"
-                     x:Name="Canocima"
-                     HeightRequest="300"
-                     BackgroundColor="Green"
-                     WidthRequest="30"
-                     Aspect="AspectFill"
-                     HorizontalOptions="End"
-                     VerticalOptions="Start"/>
-
+              <Label x:Name="LabelScore"
+                     Text="Score : 00000"
+                     FontSize="30"
+                     Margin="0,20,20,0"
+                     FontFamily="slkscre"
+                     VerticalOptions="Start"
+                     HorizontalOptions="End"/>
+                     
               <Image Source="chao.jpg"
                      x:Name="Chao"
+                     Margin="0"
                      HeightRequest="150"
                      Aspect="AspectFill"
                      HorizontalOptions="Fill"
                      VerticalOptions="End"/>
+                     <Label x:Name="labelGameOverScore"
+                     Text="0000"
+                     FontSize="30"
+                     
+                     
+                     
+                     />
+
 
               <Frame x:Name="FrameGameOver"
                      BackgroundColor="Black"
                      HorizontalOptions="Fill"
                      VerticalOptions="Fill">
                      <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnGameOverClicked"/>
+                     <TapGestureRecognizer Tapped="OnGameOverClicked"/>
                      </Frame.GestureRecognizers>
-
-                     <Image Source="inicio.png"/>
+                     <VerticalStackLayout VerticalOptions="Center">
+                     </VerticalStackLayout>
 
               </Frame>
               <Grid.GestureRecognizers>
